@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarjeta de Presentación Digital</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400..900&family=Inter:wght@400..700&display=swap" rel="stylesheet">
+    <style>
+        .font-playfair {
+            font-family: 'Playfair Display', serif;
+        }
+        .font-inter {
+            font-family: 'Inter', sans-serif;
+        }
+        body {
+            background-color: #1a1a1a;
+            color: #fff;
+            min-height: 100vh;
+        }
+        .bg-warm-gray {
+            background-color: #a0a0a0;
+        }
+        .scene {
+            width: 100%;
+            height: 100vh;
+            perspective: 1000px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            left: 0;
+        }
+        .card-flip {
+            width: 90%;
+            max-width: 400px;
+            height: 60vh;
+            max-height: 600px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+            touch-action: none;
+        }
+        .is-flipped {
+            transform: rotateY(180deg);
+        }
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 12px;
+            border: 1px solid #374151;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .card-front {
+            background-color: #000;
+        }
+        .card-back {
+            background-color: #000;
+            transform: rotateY(180deg);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            overflow-y: auto;
+        }
+        .modal {
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 50;
+        }
+    </style>
+</head>
+<body>
+    <div class="scene">
+        <div id="card" class="card-flip">
+            <!-- Front of the card -->
+            <div class="card-face card-front">
+                <!-- Decorator lines on the right side -->
+                <div class="absolute right-4 top-0 bottom-0 flex items-center space-x-1.5 h-full">
+                    <div class="bg-warm-gray h-full w-0.5 rounded-full"></div>
+                    <div class="bg-warm-gray h-full w-0.5 rounded-full"></div>
+                    <div class="bg-warm-gray h-full w-0.5 rounded-full"></div>
+                </div>
+
+                <!-- Company Info -->
+                <div class="flex flex-col items-center text-center">
+                    <div id="company-logo-trigger" class="text-4xl cursor-pointer select-none">🍽️</div>
+                    <h1 class="text-4xl font-bold tracking-wide mt-2">
+                        <span class="text-orange-500 font-playfair">Sazón</span> <span class="font-inter">y Punto</span>
+                    </h1>
+                    <p class="text-sm text-gray-400 mt-1 font-playfair">Servicios de Banquetería</p>
+                </div>
+                
+                <!-- Slogan - Justificado como se pidió -->
+                <div class="flex items-center justify-center my-4">
+                    <span class="text-2xl md:text-3xl font-extrabold tracking-tighter text-gray-400 font-playfair text-right">MENÚ</span>
+                    <div class="flex flex-col ml-2 font-inter text-left">
+                        <span class="text-orange-500 text-xs md:text-sm font-medium tracking-wide">A TU MEDIDA</span>
+                        <span class="text-orange-500 text-xs md:text-sm font-medium tracking-wide">PARA CADA OCASIÓN</span>
+                    </div>
+                </div>
+
+                <!-- Partner Information -->
+                <div class="space-y-4 font-inter">
+                    <h2 class="text-lg font-semibold text-gray-200">Nuestros Socios</h2>
+                    <!-- Julian Moreno -->
+                    <div id="julian-trigger" class="flex items-center space-x-2 cursor-pointer">
+                        <span class="text-lg text-gray-400">👨🏻‍🍳</span>
+                        <p class="text-base font-medium text-white font-inter">Julian Moreno</p>
+                    </div>
+                    <!-- Fernanda Castañeda -->
+                    <div id="fernanda-trigger" class="flex items-center space-x-2 cursor-pointer">
+                        <span class="text-lg text-gray-400">👩🏻‍🍳</span>
+                        <p class="text-base font-medium text-white font-inter">Fernanda Castañeda</p>
+                    </div>
+                    <!-- Martin Moreno -->
+                    <div id="martin-trigger" class="flex items-center space-x-2 cursor-pointer">
+                        <span class="text-lg text-gray-400">💼</span>
+                        <p class="text-base font-medium text-white font-inter">Martin Moreno</p>
+                    </div>
+                </div>
+
+                <!-- Contact Information -->
+                <div class="space-y-3 font-inter">
+                    <h2 class="text-lg font-semibold text-gray-200">Contacto</h2>
+                    <div class="flex flex-col">
+                        <p class="text-sm text-white">55 1234 5678</p>
+                        <p class="text-sm text-white">info@sazonypunto.com</p>
+                        <p class="text-sm text-white">www.sazonypunto.com</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Back of the card -->
+            <div class="card-face card-back p-8">
+                <h2 class="text-2xl font-bold font-playfair text-center text-orange-500 mb-6">Nuestros Menús y Eventos</h2>
+                
+                <!-- Menu Example 1 -->
+                <div class="bg-gray-800 p-4 rounded-xl mb-4 shadow-lg">
+                    <img src="https://placehold.co/400x200/525252/FFF?text=MENU+DEGUSTACION" alt="Imagen de un menú de degustación" class="rounded-lg mb-2">
+                    <h3 class="text-xl font-bold mb-1 font-inter">Menú de Degustación</h3>
+                    <p class="text-sm text-gray-300 font-inter">
+                        Una selección de pequeños platos para explorar una variedad de sabores, ideal para eventos de cóctel y reuniones íntimas.
+                    </p>
+                </div>
+
+                <!-- Menu Example 2 -->
+                <div class="bg-gray-800 p-4 rounded-xl mb-4 shadow-lg">
+                    <img src="https://placehold.co/400x200/525252/FFF?text=EVENTO+CORPORATIVO" alt="Imagen de un evento corporativo" class="rounded-lg mb-2">
+                    <h3 class="text-xl font-bold mb-1 font-inter">Eventos Corporativos</h3>
+                    <p class="text-sm text-gray-300 font-inter">
+                        Ofrecemos opciones de banquetería elegantes y profesionales para conferencias, talleres y cenas de gala.
+                    </p>
+                </div>
+                
+                <!-- Extra content to force scroll -->
+                <div class="bg-gray-800 p-4 rounded-xl mb-4 shadow-lg">
+                    <img src="https://placehold.co/400x200/525252/FFF?text=MENU+ESPECIAL" alt="Imagen de un menú especial" class="rounded-lg mb-2">
+                    <h3 class="text-xl font-bold mb-1 font-inter">Menú de temporada</h3>
+                    <p class="text-sm text-gray-300 font-inter">
+                        Descubre nuestros platillos especiales, diseñados con los mejores ingredientes de la temporada.
+                    </p>
+                </div>
+
+                <div class="bg-gray-800 p-4 rounded-xl mb-4 shadow-lg">
+                    <img src="https://placehold.co/400x200/525252/FFF?text=BODAS" alt="Imagen de una boda" class="rounded-lg mb-2">
+                    <h3 class="text-xl font-bold mb-1 font-inter">Servicio para Bodas</h3>
+                    <p class="text-sm text-gray-300 font-inter">
+                        Hacemos realidad el banquete de tus sueños con opciones personalizadas que se adaptan a cualquier estilo de celebración.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modals for Partner Info -->
+    <!-- Julian Moreno Modal -->
+    <div id="julian-modal" class="modal fixed inset-0 hidden items-center justify-center p-4">
+        <div class="bg-black text-white p-6 rounded-xl shadow-lg border border-gray-700 max-w-sm w-full relative" onclick="event.stopPropagation()">
+            <button class="absolute top-2 right-2 text-gray-400 hover:text-white text-2xl" id="julian-close-btn">&times;</button>
+            <h3 class="text-2xl font-bold mb-4 font-inter text-orange-500">Julian Moreno</h3>
+            <p class="font-playfair text-lg text-gray-300">Chef Ejecutivo</p>
+            <p class="text-sm text-gray-400 mt-2">
+                Experto en cocina tradicional mexicana y platillos de alta gastronomía. Resuelve dudas sobre personalización de menús y maridajes.
+            </p>
+            <p class="text-sm text-gray-400 mt-4">Horario de atención: 9am - 6pm</p>
+            <p class="text-sm text-gray-400">Contacto personal: <span class="text-white">julian.moreno@sazonypunto.com</span></p>
+        </div>
+    </div>
+
+    <!-- Fernanda Castañeda Modal -->
+    <div id="fernanda-modal" class="modal fixed inset-0 hidden items-center justify-center p-4">
+        <div class="bg-black text-white p-6 rounded-xl shadow-lg border border-gray-700 max-w-sm w-full relative" onclick="event.stopPropagation()">
+            <button class="absolute top-2 right-2 text-gray-400 hover:text-white text-2xl" id="fernanda-close-btn">&times;</button>
+            <h3 class="text-2xl font-bold mb-4 font-inter text-orange-500">Fernanda Castañeda</h3>
+            <p class="font-playfair text-lg text-gray-300">Chef de Repostería</p>
+            <p class="text-sm text-gray-400 mt-2">
+                Especialista en postres creativos, pasteles temáticos y mesas de dulces. Resuelve dudas sobre opciones sin gluten y veganas.
+            </p>
+            <p class="text-sm text-gray-400 mt-4">Horario de atención: 10am - 7pm</p>
+            <p class="text-sm text-gray-400">Contacto personal: <span class="text-white">fernanda.castaneda@sazonypunto.com</span></p>
+        </div>
+    </div>
+
+    <!-- Martin Moreno Modal -->
+    <div id="martin-modal" class="modal fixed inset-0 hidden items-center justify-center p-4">
+        <div class="bg-black text-white p-6 rounded-xl shadow-lg border border-gray-700 max-w-sm w-full relative" onclick="event.stopPropagation()">
+            <button class="absolute top-2 right-2 text-gray-400 hover:text-white text-2xl" id="martin-close-btn">&times;</button>
+            <h3 class="text-2xl font-bold mb-4 font-inter text-orange-500">Martin Moreno</h3>
+            <p class="font-playfair text-lg text-gray-300">Gerente</p>
+            <p class="text-sm text-gray-400 mt-2">
+                Encargado de la logística de eventos y la gestión de presupuestos. Resuelve dudas sobre cotizaciones, facturación y fechas disponibles.
+            </p>
+            <p class="text-sm text-gray-400 mt-4">Horario de atención: 9am - 5pm</p>
+            <p class="text-sm text-gray-400">Contacto personal: <span class="text-white">martin.moreno@sazonypunto.com</span></p>
+        </div>
+    </div>
+
+    <!-- Company History Modal -->
+    <div id="history-modal" class="modal fixed inset-0 hidden items-center justify-center p-4">
+        <div class="bg-black text-white p-6 rounded-xl shadow-lg border border-gray-700 max-w-sm w-full relative" onclick="event.stopPropagation()">
+            <button class="absolute top-2 right-2 text-gray-400 hover:text-white text-2xl" id="history-close-btn">&times;</button>
+            <h3 class="text-2xl font-bold mb-4 font-inter text-orange-500">Nuestra Historia</h3>
+            <p class="text-sm text-gray-400 mt-2">
+                "Sazón y Punto" nació de la pasión de tres socios por la gastronomía y la organización de eventos. Julian, con su experiencia culinaria, Fernanda, con su creatividad en repostería, y Martin, con su habilidad para la gestión, unieron fuerzas para crear un servicio de banquetes único. Nuestra misión es ofrecer menús personalizados que deleiten a los invitados y reflejen la esencia de cada celebración.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const card = document.getElementById('card');
+            const companyLogo = document.getElementById('company-logo-trigger');
+            const julianTrigger = document.getElementById('julian-trigger');
+            const fernandaTrigger = document.getElementById('fernanda-trigger');
+            const martinTrigger = document.getElementById('martin-trigger');
+            
+            const julianModal = document.getElementById('julian-modal');
+            const fernandaModal = document.getElementById('fernanda-modal');
+            const martinModal = document.getElementById('martin-modal');
+            const historyModal = document.getElementById('history-modal');
+
+            const julianCloseBtn = document.getElementById('julian-close-btn');
+            const fernandaCloseBtn = document.getElementById('fernanda-close-btn');
+            const martinCloseBtn = document.getElementById('martin-close-btn');
+            const historyCloseBtn = document.getElementById('history-close-btn');
+
+            let touchStartX = 0;
+            let isSwiping = false;
+            const swipeThreshold = 50;
+
+            const showModal = (modal) => {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            };
+
+            const hideModal = (modal) => {
+                modal.classList.remove('flex');
+                modal.classList.add('hidden');
+            };
+
+            companyLogo.addEventListener('click', (e) => { e.stopPropagation(); showModal(historyModal); });
+            julianTrigger.addEventListener('click', (e) => { e.stopPropagation(); showModal(julianModal); });
+            fernandaTrigger.addEventListener('click', (e) => { e.stopPropagation(); showModal(fernandaModal); });
+            martinTrigger.addEventListener('click', (e) => { e.stopPropagation(); showModal(martinModal); });
+
+            julianCloseBtn.addEventListener('click', (e) => { e.stopPropagation(); hideModal(julianModal); });
+            fernandaCloseBtn.addEventListener('click', (e) => { e.stopPropagation(); hideModal(fernandaModal); });
+            martinCloseBtn.addEventListener('click', (e) => { e.stopPropagation(); hideModal(martinModal); });
+            historyCloseBtn.addEventListener('click', (e) => { e.stopPropagation(); hideModal(historyModal); });
+            
+            julianModal.addEventListener('click', () => hideModal(julianModal));
+            fernandaModal.addEventListener('click', () => hideModal(fernandaModal));
+            martinModal.addEventListener('click', () => hideModal(martinModal));
+            historyModal.addEventListener('click', () => hideModal(historyModal));
+
+            card.addEventListener('touchstart', (e) => {
+                touchStartX = e.touches[0].clientX;
+                isSwiping = true;
+            });
+
+            card.addEventListener('touchmove', (e) => {
+                const deltaY = Math.abs(e.touches[0].clientY - e.touches[0].clientY);
+                if (isSwiping) {
+                    const deltaX = Math.abs(e.touches[0].clientX - touchStartX);
+                    if (deltaX > deltaY && deltaX > 10) {
+                        e.preventDefault();
+                    }
+                }
+            });
+
+            card.addEventListener('touchend', (e) => {
+                if (!isSwiping) return;
+                const touchEndX = e.changedTouches[0].clientX;
+                const deltaX = touchEndX - touchStartX;
+                if (Math.abs(deltaX) > swipeThreshold) {
+                    card.classList.toggle('is-flipped');
+                }
+                isSwiping = false;
+            });
+        });
+    </script>
+</body>
+</html>
